@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import '../util/builder.dart';
 import './heatmap_month_text.dart';
 import './heatmap_column.dart';
 import '../data/heatmap_color_mode.dart';
@@ -75,11 +76,16 @@ class HeatMapPage extends StatelessWidget {
 
   final bool? showText;
 
+  final LocalizeShortMonthBuilder? shortMonthBuilder;
+  final LocalizeWeekDayBuilder? weekDayBuilder;
+
   HeatMapPage({
     Key? key,
     required this.colorMode,
     required this.startDate,
     required this.endDate,
+    this.shortMonthBuilder,
+    this.weekDayBuilder,
     this.size,
     this.fontSize,
     this.datasets,
@@ -148,6 +154,7 @@ class HeatMapPage extends StatelessWidget {
           children: [
             // Show week labels to left side of heatmap.
             HeatMapWeekText(
+              weekDayBuilder: weekDayBuilder,
               margin: margin,
               fontSize: fontSize,
               size: size,
@@ -159,6 +166,7 @@ class HeatMapPage extends StatelessWidget {
                 // Show month labels to top of heatmap.
                 HeatMapMonthText(
                   firstDayInfos: _firstDayInfos,
+                  shortMonthBuilder: shortMonthBuilder,
                   margin: margin,
                   fontSize: fontSize,
                   fontColor: textColor,

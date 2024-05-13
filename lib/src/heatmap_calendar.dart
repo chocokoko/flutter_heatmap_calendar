@@ -4,6 +4,7 @@ import './widget/heatmap_calendar_page.dart';
 import './widget/heatmap_color_tip.dart';
 import './util/date_util.dart';
 import './util/widget_util.dart';
+import 'util/builder.dart';
 
 class HeatMapCalendar extends StatefulWidget {
   /// The datasets which fill blocks based on its value.
@@ -87,9 +88,15 @@ class HeatMapCalendar extends StatefulWidget {
   /// The double value of [HeatMapColorTip]'s tip container's size.
   final double? colorTipSize;
 
+  final LocalizeMonthBuilder? monthBuilder;
+
+  final LocalizeWeekDayBuilder? weekDayBuilder;
+
   const HeatMapCalendar({
     Key? key,
     required this.colorsets,
+    this.monthBuilder,
+    this.weekDayBuilder,
     this.colorMode = ColorMode.opacity,
     this.defaultColor,
     this.datasets,
@@ -154,9 +161,11 @@ class _HeatMapCalendar extends State<HeatMapCalendar> {
 
         // Text which shows the current year and month
         Text(
-          DateUtil.MONTH_LABEL[_currentDate?.month ?? 0] +
-              ' ' +
-              (_currentDate?.year).toString(),
+          widget.monthBuilder != null
+              ? widget.monthBuilder!(_currentDate?.month ?? 0)
+              : DateUtil.MONTH_LABEL[_currentDate?.month ?? 0] +
+                  ' ' +
+                  (_currentDate?.year).toString(),
           style: TextStyle(
             fontSize: widget.monthFontSize ?? 12,
           ),
@@ -178,7 +187,7 @@ class _HeatMapCalendar extends State<HeatMapCalendar> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        for (String label in DateUtil.WEEK_LABEL.skip(1))
+        for (var i = 1; i < DateUtil.WEEK_LABEL.length; i++)
           WidgetUtil.flexibleContainer(
             widget.flexible ?? false,
             false,
@@ -189,7 +198,7 @@ class _HeatMapCalendar extends State<HeatMapCalendar> {
               width: widget.size ?? 42,
               alignment: Alignment.center,
               child: Text(
-                label,
+                widget.weekDayBuilder != null ? widget.weekDayBuilder!(i): DateUtil.WEEK_LABEL[i],
                 style: TextStyle(
                   fontSize: widget.weekFontSize ?? 12,
                   color: widget.weekTextColor ?? const Color(0xFF758EA1),

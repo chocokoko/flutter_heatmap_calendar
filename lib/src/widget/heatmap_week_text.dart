@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../util/builder.dart';
 import '../util/date_util.dart';
 
 class HeatMapWeekText extends StatelessWidget {
@@ -14,8 +16,11 @@ class HeatMapWeekText extends StatelessWidget {
   /// The color value of every font's color.
   final Color? fontColor;
 
+  final LocalizeWeekDayBuilder? weekDayBuilder;
+
   const HeatMapWeekText({
     Key? key,
+    this.weekDayBuilder,
     this.margin,
     this.fontSize,
     this.size,
@@ -27,12 +32,16 @@ class HeatMapWeekText extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        for (String label in DateUtil.WEEK_LABEL)
+        for (int i = 0; i < DateUtil.WEEK_LABEL.length; i++)
           Container(
             height: size ?? 20,
             margin: margin ?? const EdgeInsets.all(2.0),
             child: Text(
-              label,
+              i == 0
+                  ? DateUtil.WEEK_LABEL[i]
+                  : (weekDayBuilder != null
+                      ? weekDayBuilder!(i)
+                      : DateUtil.WEEK_LABEL[i]),
               style: TextStyle(
                 fontSize: fontSize ?? 12,
                 color: fontColor,

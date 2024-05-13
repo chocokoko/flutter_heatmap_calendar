@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../util/date_util.dart';
 
+typedef LocalizeShortMonthBuilder = String Function(int month);
+
 class HeatMapMonthText extends StatelessWidget {
   /// List value of every sunday's month information.
   ///
@@ -19,9 +21,12 @@ class HeatMapMonthText extends StatelessWidget {
   /// The margin value for correctly space between labels.
   final EdgeInsets? margin;
 
+  final LocalizeShortMonthBuilder? shortMonthBuilder;
+
   const HeatMapMonthText({
     Key? key,
     this.firstDayInfos,
+    this.shortMonthBuilder,
     this.fontSize,
     this.fontColor,
     this.size,
@@ -47,13 +52,13 @@ class HeatMapMonthText extends StatelessWidget {
         // Otherwise, add Text with width margin.
         items.add(
           firstDayInfos!.length == 1 || (label == 0 && firstDayInfos![label] != firstDayInfos![label + 1])
-              ? _renderText(DateUtil.SHORT_MONTH_LABEL[firstDayInfos![label]])
+              ? _renderText(shortMonthBuilder != null ? shortMonthBuilder!(label) : DateUtil.SHORT_MONTH_LABEL[firstDayInfos![label]])
               : Container(
                   width: (((size ?? 20) + (margin?.right ?? 2)) * 2),
                   margin: EdgeInsets.only(
                       left: margin?.left ?? 2, right: margin?.right ?? 2),
                   child: _renderText(
-                      DateUtil.SHORT_MONTH_LABEL[firstDayInfos![label]]),
+                      shortMonthBuilder!=null ? shortMonthBuilder!(label): DateUtil.SHORT_MONTH_LABEL[firstDayInfos![label]]),
                 ),
         );
       } else if (_write) {

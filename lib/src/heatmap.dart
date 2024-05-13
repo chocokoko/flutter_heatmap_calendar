@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_heatmap_calendar/src/util/builder.dart';
+import 'package:flutter_heatmap_calendar/src/widget/heatmap_month_text.dart';
 import './widget/heatmap_page.dart';
 import './widget/heatmap_color_tip.dart';
 import './data/heatmap_color_mode.dart';
@@ -87,9 +89,15 @@ class HeatMap extends StatefulWidget {
   /// The double value of [HeatMapColorTip]'s tip container's size.
   final double? colorTipSize;
 
+  final LocalizeShortMonthBuilder? shortMonthBuilder;
+
+  final LocalizeWeekDayBuilder? weekDayBuilder;
+
   const HeatMap({
     Key? key,
     required this.colorsets,
+    this.shortMonthBuilder,
+    this.weekDayBuilder,
     this.colorMode = ColorMode.opacity,
     this.startDate,
     this.endDate,
@@ -135,6 +143,8 @@ class _HeatMap extends State<HeatMap> {
           endDate: widget.endDate ?? DateTime.now(),
           startDate: widget.startDate ??
               DateUtil.oneYearBefore(widget.endDate ?? DateTime.now()),
+          shortMonthBuilder: widget.shortMonthBuilder,
+          weekDayBuilder: widget.weekDayBuilder,
           colorMode: widget.colorMode,
           size: widget.size,
           fontSize: widget.fontSize,
