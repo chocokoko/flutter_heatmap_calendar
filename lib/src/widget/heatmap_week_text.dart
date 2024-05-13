@@ -38,9 +38,9 @@ class HeatMapWeekText extends StatelessWidget {
             margin: margin ?? const EdgeInsets.all(2.0),
             child: Text(
               i == 0
-                  ? DateUtil.WEEK_LABEL[i]
+                  ? DateUtil.WEEK_LABEL[0]
                   : (weekDayBuilder != null
-                      ? weekDayBuilder!(i)
+                      ? weekDayBuilder!(i == 1 ? 7 : (i == 7 ? 1 : i))
                       : DateUtil.WEEK_LABEL[i]),
               style: TextStyle(
                 fontSize: fontSize ?? 12,

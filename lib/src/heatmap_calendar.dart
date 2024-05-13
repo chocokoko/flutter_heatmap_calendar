@@ -198,7 +198,10 @@ class _HeatMapCalendar extends State<HeatMapCalendar> {
               width: widget.size ?? 42,
               alignment: Alignment.center,
               child: Text(
-                widget.weekDayBuilder != null ? widget.weekDayBuilder!(i): DateUtil.WEEK_LABEL[i],
+                // WEEK_LABEL由周日开始
+                widget.weekDayBuilder != null
+                    ? widget.weekDayBuilder!(i == 1 ? 7 : (i == 7 ? 1 : i))
+                    : DateUtil.WEEK_LABEL[i],
                 style: TextStyle(
                   fontSize: widget.weekFontSize ?? 12,
                   color: widget.weekTextColor ?? const Color(0xFF758EA1),
