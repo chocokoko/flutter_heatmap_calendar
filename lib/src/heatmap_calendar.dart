@@ -200,7 +200,7 @@ class _HeatMapCalendar extends State<HeatMapCalendar> {
               child: Text(
                 // WEEK_LABEL由周日开始
                 widget.weekDayBuilder != null
-                    ? widget.weekDayBuilder!(i == 1 ? 7 : (i == 7 ? 1 : i))
+                    ? widget.weekDayBuilder!(i == 1 ? 7 :  i - 1)
                     : DateUtil.WEEK_LABEL[i],
                 style: TextStyle(
                   fontSize: widget.weekFontSize ?? 12,

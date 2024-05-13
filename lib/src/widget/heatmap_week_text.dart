@@ -40,7 +40,7 @@ class HeatMapWeekText extends StatelessWidget {
               i == 0
                   ? DateUtil.WEEK_LABEL[0]
                   : (weekDayBuilder != null
-                      ? weekDayBuilder!(i == 1 ? 7 : (i == 7 ? 1 : i))
+                      ? weekDayBuilder!(i == 1 ? 7 : i - 1)
                       : DateUtil.WEEK_LABEL[i]),
               style: TextStyle(
                 fontSize: fontSize ?? 12,
